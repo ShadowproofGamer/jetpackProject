@@ -1,5 +1,6 @@
 package com.example.jetpackproject
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //Greeting("Android")
-                    ItemList(item = listOf("a", "b", "c"))
+                    ItemList(item = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "a", "b", "c", "d", "e", "f", "g", "h", "i"))
                     
                 }
             }
@@ -56,9 +57,11 @@ fun GreetingPreview() {
 
 @Composable
 fun ItemList(item: List<String>, modifier: Modifier = Modifier){
+    //var myRepository = MyRepository()
+    //var dataList = myRepository.getData()!!
     LazyColumn{
         itemsIndexed(
-            //listOf("a", "b", "c")
+            //listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
             item
         ){  index, string ->
             Text(
