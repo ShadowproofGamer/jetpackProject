@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LinearProgressIndicator
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,8 +62,17 @@ fun ItemDetails(
             contentDescription = "",
             modifier = Modifier.size(150.dp)
         )
-        Text(text = item.text_name, fontWeight = FontWeight.Bold, fontSize = 25.sp)
-        Text(text = item.text_spec)
+        Text(
+            text = item.text_name,
+            fontSize = 20.sp,
+            color = Color(0xFFFFA500),
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = item.text_spec, fontSize = 15.sp
+        )
+
+
         Spacer(modifier = Modifier.padding(15.dp))
         Column {
             Text(text = "Rating")
@@ -83,19 +94,31 @@ fun ItemDetails(
                 )
             }
         }
-        Spacer(modifier = Modifier.padding(15.dp))
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Is dangerous")
+            Checkbox(
+                checked = item.dangerous,
+                onCheckedChange = null,
+                enabled = false
+            )
+            Text(
+                text = "Is dangerous",
+                modifier = Modifier
+                    .weight(1.0F)
+                    .padding(start = 10.dp)
+                    .align(Alignment.CenterVertically),
+                textAlign = TextAlign.Left
+            )
             //Text(text = "${item.item_strength}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Checkbox(checked = item.dangerous, onCheckedChange = null, enabled = false)
+
         }
+        Spacer(modifier = Modifier.padding(15.dp))
 
 
         //buttons
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {

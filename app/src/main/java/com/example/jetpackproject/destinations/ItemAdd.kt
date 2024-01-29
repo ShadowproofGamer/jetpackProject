@@ -47,7 +47,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
     var modify by rememberSaveable { mutableStateOf(item?.dangerous ?: false) }
 
     LaunchedEffect(item) {
-        if (item != null) {
+        if (item != null && itemType!=item.item_type) {
             itemType = item.item_type
             textName = item.text_name
             textSpec = item.text_spec
@@ -59,14 +59,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
         }
     }
 
-    val icon = when (itemType) {
-        humanoids[0] -> R.drawable.human
-        humanoids[1] -> R.drawable.npc
-        humanoids[2] -> R.drawable.enemy
-        else -> {
-            R.drawable.npc
-        }
-    }
+
     Column(
 
     ) {
@@ -76,6 +69,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
             } else {
                 "Add new item"
             },
+            textAlign = TextAlign.Center,
             fontSize = 22.sp,
             style = MaterialTheme.typography.titleLarge
         )
@@ -121,20 +115,17 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                 fontSize = 20.sp
             )
         }
-
-
-        Row(
-            //verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().wrapContentHeight()
-        ) {
-            Column(
-                modifier = Modifier.weight(1.0F)
-            ) {
-                Row {
-                    Checkbox(checked = dangerous, onCheckedChange = { dangerous = it })
-                    Text(text = "Is dangerous?")
-                }
-            }
+        Row (
+            //modifier = Modifier.weight(1.0F),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Checkbox(checked = dangerous, onCheckedChange = { dangerous = it })
+            Text(text = "Is dangerous?",
+                modifier = Modifier
+                .weight(1.0F)
+                .padding(start = 10.dp)
+                .align(Alignment.CenterVertically),
+                textAlign = TextAlign.Left)
             Column(
                 modifier = Modifier.weight(1.0F)
             ) {
@@ -151,6 +142,11 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
 
                 }
             }
+        }
+
+
+
+            //buttons
             Row(
 
             ) {
@@ -184,7 +180,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                 }
             }
         }
-    }
+
 
 
 }
