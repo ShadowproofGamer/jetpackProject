@@ -22,6 +22,7 @@ class NavigationActions(private val navController: NavHostController) {
         }
     }
 
+
     fun navigateToImageSwipe() {
         navController.navigate(IMAGE_SWIPE) {
             launchSingleTop = true

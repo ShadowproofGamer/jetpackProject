@@ -58,9 +58,11 @@ fun ItemRow(
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .combinedClickable(onClick = {
+            .combinedClickable(
+                onClick = {
                 onClick(item)
-            }, onLongClick = {
+            },
+                onLongClick = {
                 openDialog.value = true
             })
             .padding(vertical = 10.dp, horizontal = 20.dp)) {
@@ -117,7 +119,6 @@ fun ItemList(
     Box(modifier = Modifier.fillMaxSize()){
         LazyColumn {
             itemsIndexed(
-                //listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
                 items.value
             ) { index, item ->
                 ItemRow(item = item,
@@ -134,16 +135,6 @@ fun ItemList(
 
             }
         }
-//        FloatingActionButton(
-//            onClick = {
-//                navController.navigate(AllDestinations.ITEM_ADD)
-//                      },
-//            modifier = Modifier
-//                //.padding(all = 16.dp)
-//                .align(Alignment.BottomEnd)
-//        ) {
-//            Icon(imageVector = Icons.Default.Add, contentDescription = "add item")
-//        }
     }
 
 }
