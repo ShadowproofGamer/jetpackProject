@@ -65,7 +65,8 @@ fun MainComposable(
             )
         }, drawerState = drawerState
     ) {
-        Scaffold(topBar = {
+        Scaffold(
+            topBar = {
             TopAppBar(
                 title = {
                     Text(
@@ -92,9 +93,10 @@ fun MainComposable(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary) //primaryContainer
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
             )
-        }, bottomBar = {
+        },
+            bottomBar = {
             BottomAppBar(
                 modifier = Modifier.fillMaxWidth(),
 
@@ -110,8 +112,7 @@ fun MainComposable(
 
                             Image(
                                 painter = painterResource(id = R.drawable.chevron_left),
-                                contentDescription = null,
-                                modifier = Modifier.weight(1.0F)
+                                contentDescription = null
                             )
                         }
                         IconButton(

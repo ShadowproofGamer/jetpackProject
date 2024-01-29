@@ -43,7 +43,9 @@ import com.example.jetpackproject.db.DBItemViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemRow(
-    item: DBItem, onClick: (item: DBItem) -> Unit, onLongClick: (item: DBItem) -> Unit
+    item: DBItem,
+    onClick: (item: DBItem) -> Unit,
+    onLongClick: (item: DBItem) -> Unit
 ) {
     val icon = when (item.item_type) {
         humanoids[0] -> R.drawable.human

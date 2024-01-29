@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
@@ -40,34 +41,43 @@ fun MainDrawer(
     closeDrawer: () -> Unit = {}
 ) {
     ModalDrawerSheet(modifier = Modifier) {
-        //DrawerHeader(modifier)
+        //Drawer Header
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .background(MaterialTheme.colorScheme.secondary)
                 .padding(15.dp)
                 .fillMaxWidth()
         ) {
 
             Image(
-                painterResource(id = R.drawable.human_title),
+                painterResource(id = R.drawable.human),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = modifier
-                    .size(70.dp)
-                    .clip(CircleShape)
             )
-            Spacer(modifier = Modifier.padding(5.dp))
+//            Spacer(modifier = Modifier.padding(5.dp))
 
             Text(
                 text = stringResource(id = R.string.app_name),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
+                textAlign = TextAlign.Center
             )
         }
+
         //Navigation Items
+        NavigationDrawerItem(
+            label = {
+                Text(
+                    text = stringResource(id = R.string.image_swipe_desc),
+                    style = MaterialTheme.typography.labelSmall
+                )
+            },
+            selected = route == AllDestinations.IMAGE_SWIPE,
+            onClick = {
+                navigateToImageSwipe()
+                closeDrawer()
+            },
+            icon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null) },
+            shape = MaterialTheme.shapes.small
+        )
         NavigationDrawerItem(
             label = {
                 Text(
@@ -81,21 +91,6 @@ fun MainDrawer(
                 closeDrawer()
             },
             icon = { Icon(imageVector = Icons.Default.Home, contentDescription = null) },
-            shape = MaterialTheme.shapes.small
-        )
-        NavigationDrawerItem(
-            label = {
-                Text(
-                    text = stringResource(id = R.string.image_swipe_desc),
-                    style = MaterialTheme.typography.labelSmall
-                )
-            },
-            selected = route == AllDestinations.IMAGE_SWIPE,
-            onClick = {
-                navigateToImageSwipe()
-                closeDrawer()
-            },
-            icon = { Icon(imageVector = Icons.Default.Edit, contentDescription = null) },
             shape = MaterialTheme.shapes.small
         )
 
@@ -115,9 +110,4 @@ fun MainDrawer(
             shape = MaterialTheme.shapes.small
         )
     }
-}
-
-@Composable
-fun DrawerHeader(modifier: Modifier) {
-
 }

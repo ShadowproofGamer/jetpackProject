@@ -42,13 +42,13 @@ import com.example.jetpackproject.db.humanoids
 fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavController) {
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
+
     var itemId by rememberSaveable { mutableIntStateOf(item?.id ?: -1) }
     var itemType by rememberSaveable { mutableStateOf(item?.item_type ?: humanoids[0]) }
     var textName by rememberSaveable { mutableStateOf(item?.text_name ?: "") }
     var textSpec by rememberSaveable { mutableStateOf(item?.text_spec ?: "") }
     var dangerous by rememberSaveable { mutableStateOf(item?.dangerous ?: false) }
     var itemStrength by rememberSaveable { mutableFloatStateOf(item?.item_strength ?: 0.0f) }
-    var modify = (item !=null)
 
     LaunchedEffect(item) {
         if (item != null && itemId != item.id) {
@@ -58,11 +58,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
             textSpec = item.text_spec
             dangerous = item.dangerous
             itemStrength = item.item_strength
-            //modify = true
         }
-//        else {
-//            modify = false
-//        }
     }
 
 
@@ -73,7 +69,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
             .padding(vertical = 20.dp, horizontal = 60.dp)
     ) {
         Text(
-            text = if (modify) {
+            text = if (item !=null) {
                 "Modify item"
             } else {
                 "Add new item"

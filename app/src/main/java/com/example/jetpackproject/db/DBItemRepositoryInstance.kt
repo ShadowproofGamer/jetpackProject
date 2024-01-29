@@ -1,10 +1,8 @@
 package com.example.jetpackproject.db;
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
-class OfflineDBItemRepository(private val myDao: MyDao) : DBItemRepository {
+class DBItemRepositoryInstance(private val myDao: MyDao) : DBItemRepository {
     override fun getAllDataStream(): Flow<List<DBItem>> {
         return myDao.getAllData()
     }
