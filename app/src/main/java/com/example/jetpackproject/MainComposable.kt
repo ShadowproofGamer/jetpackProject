@@ -4,6 +4,7 @@ package com.example.jetpackproject
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -53,85 +55,87 @@ fun MainComposable(
     }
     ModalNavigationDrawer(
         drawerContent = {
-            MainDrawer(
-                route = currentRoute,
+            MainDrawer(route = currentRoute,
                 navigateToMainScreen = { navigationActions.navigateToHome() },
                 navigateToImageSwipe = { navigationActions.navigateToImages() },
                 navigateToItemList = { navigationActions.navigateToItemsList() },
                 closeDrawer = { coroutineScope.launch { drawerState.close() } },
                 modifier = Modifier
             )
-        },
-        drawerState = drawerState
+        }, drawerState = drawerState
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = currentRoute.substringBefore("/")) },
-                    modifier = Modifier.fillMaxWidth(),
-                    navigationIcon = {
+        Scaffold(topBar = {
+            TopAppBar(
+                title = { Text(text = currentRoute
+                    //.substringBefore("/")
+                ) },
+                modifier = Modifier.fillMaxWidth(),
+                navigationIcon = {
+                    IconButton(onClick = {
+                        coroutineScope.launch { drawerState.open() }
+                    }, content = {
+                        Icon(
+                            imageVector = Icons.Default.Menu, contentDescription = null
+                        )
+                    })
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            )
+        }, bottomBar = {
+            BottomAppBar(
+                modifier = Modifier.fillMaxWidth(),
+
+                ) {
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    content = {
                         IconButton(onClick = {
-                            coroutineScope.launch { drawerState.open() }
+                            navigationActions.navigateToImages()
                         }, content = {
-                            Icon(
-                                imageVector = Icons.Default.Menu, contentDescription = null
-                            )
-                        })
-                    },
-                    colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-                )
-            },
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier.fillMaxWidth(),
 
-
-                    ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        content = {
-                            IconButton(
-                                onClick = {
-                                coroutineScope.launch { navigationActions.navigateToImages() }
-                            },
-                                content = {
-                                Image(
-                                    painter = painterResource(id = R.drawable.chevron_left),
-                                    contentDescription = null
-                                )
-                            },
+                            Image(
+                                painter = painterResource(id = R.drawable.chevron_left),
+                                contentDescription = null,
                                 modifier = Modifier.weight(1.0F)
                             )
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch { navigationActions.navigateToHome() }
-                                },
-                                content = {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.chevron_up),
-                                        contentDescription = null
-                                    )
-                                },
-                                modifier = Modifier.weight(1.0F)
-                            )
-                            IconButton(
-                                onClick = {
-                                coroutineScope.launch { navigationActions.navigateToItemsList() }
-                            }, content = {
-                                Image(
-                                    painter = painterResource(id = R.drawable.chevron_right),
-                                    contentDescription = null
-                                )
-                            },
-                                modifier = Modifier.weight(1.0F)
-                            )
+//                            Text(
+//                                text = "Image swipe",
+//                                modifier = Modifier.weight(1.0F)
+//                            )
 
-                        }
-                    )
-                }
-            },
-            modifier = Modifier
+
+                        }, modifier = Modifier.weight(1.0F)
+                        )
+                        IconButton(onClick = {
+                            navigationActions.navigateToHome()
+                        }, content = {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.chevron_up),
+                                contentDescription = null
+                            )
+                            //Text(text = "Start screen")
+
+
+                        }, modifier = Modifier.weight(1.0F)
+                        )
+                        IconButton(onClick = {
+                            navigationActions.navigateToItemsList()
+                        }, content = {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.chevron_right),
+                                contentDescription = null
+                            )
+                            //Text(text = "Item list")
+
+
+                        }, modifier = Modifier.weight(1.0F)
+                        )
+
+                    })
+            }
+        }, modifier = Modifier
         ) {
             SetupNavGraph(navController = navController, padding = it, viewModel = viewModel)
         }

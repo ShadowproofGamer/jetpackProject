@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun SetupNavGraph(
     navController: NavHostController, padding: PaddingValues, viewModel: DBItemViewModel
 ) {
-    var selectedImage by rememberSaveable { mutableIntStateOf(R.drawable.human) }
+    var selectedImage by rememberSaveable { mutableIntStateOf(R.drawable.human_title) }
     NavHost(
         navController = navController,
         startDestination = AllDestinations.START_SCREEN,
