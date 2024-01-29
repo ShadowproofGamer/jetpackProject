@@ -27,8 +27,8 @@ class DBItem {
         return super.equals(other)
     }
 
-
     constructor()
+
 
     constructor(num: Int) : this() {
         text_name = "Default person name " + num
@@ -58,6 +58,16 @@ class DBItem {
         item_type = type
         dangerous = danger
 
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + text_name.hashCode()
+        result = 31 * result + text_spec.hashCode()
+        result = 31 * result + item_strength.hashCode()
+        result = 31 * result + item_type.hashCode()
+        result = 31 * result + dangerous.hashCode()
+        return result
     }
 }
 

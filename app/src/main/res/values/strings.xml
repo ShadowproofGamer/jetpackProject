@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">jetpackProject</string>
+    <string name="opis_1">Opis 1</string>
+    <string name="opis_2">Opis 2</string>
+
+    <string name="start_screen_desc">Start screen</string>
+    <string name="image_swipe_desc">Choose title image</string>
+    <string name="item_list_desc">Item list</string>
+    <string name="item_add_desc">Add item</string>
+    <string name="item_details_desc">Details</string>
 </resources>

@@ -14,7 +14,7 @@ abstract class MyDB : RoomDatabase() {
         private var DB_INSTANCE: MyDB? = null
 
         @Synchronized
-        open fun getDatabase(context: Context): MyDB? {
+        open fun getDatabase(context: Context): MyDB {
             if (DB_INSTANCE == null) {
                 DB_INSTANCE = databaseBuilder(
                     context.applicationContext,
@@ -22,7 +22,7 @@ abstract class MyDB : RoomDatabase() {
                     "item_database"
                 ).allowMainThreadQueries().build()
             }
-            return DB_INSTANCE
+            return DB_INSTANCE as MyDB
         }
     }
 }
