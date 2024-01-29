@@ -15,21 +15,21 @@ object AllDestinations {
 
 class NavigationActions(private val navController: NavHostController) {
 
-    fun navigateToHome() {
+    fun navigateToStartScreen() {
         navController.navigate(START_SCREEN) {
             launchSingleTop = true
             popUpTo(START_SCREEN)
         }
     }
 
-    fun navigateToImages() {
+    fun navigateToImageSwipe() {
         navController.navigate(IMAGE_SWIPE) {
             launchSingleTop = true
             popUpTo(START_SCREEN)
         }
     }
 
-    fun navigateToItemsList() {
+    fun navigateToItemList() {
         navController.navigate(ITEM_LIST) {
             launchSingleTop = true
             popUpTo(START_SCREEN)

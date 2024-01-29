@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun SetupNavGraph(
     navController: NavHostController, padding: PaddingValues, viewModel: DBItemViewModel
 ) {
-    var selectedImage by rememberSaveable { mutableIntStateOf(R.drawable.human_title) }
+    var selectedImage by rememberSaveable { mutableIntStateOf(R.drawable.emotion_neutral) }
     NavHost(
         navController = navController,
         startDestination = AllDestinations.START_SCREEN,
@@ -53,7 +53,7 @@ fun SetupNavGraph(
 
         //image swipe
         composable(route = AllDestinations.IMAGE_SWIPE) {
-            ImageSwipe(navController = navController)
+            ImageSwipe(navController = navController, currentImage = selectedImage)
         }
 
         //item list

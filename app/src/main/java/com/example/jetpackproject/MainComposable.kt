@@ -4,10 +4,10 @@ package com.example.jetpackproject
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DrawerState
@@ -26,8 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -38,7 +38,7 @@ import com.example.jetpackproject.db.DBItemViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainComposable(
@@ -55,10 +55,11 @@ fun MainComposable(
     }
     ModalNavigationDrawer(
         drawerContent = {
-            MainDrawer(route = currentRoute,
-                navigateToMainScreen = { navigationActions.navigateToHome() },
-                navigateToImageSwipe = { navigationActions.navigateToImages() },
-                navigateToItemList = { navigationActions.navigateToItemsList() },
+            MainDrawer(
+                route = currentRoute,
+                navigateToMainScreen = { navigationActions.navigateToStartScreen() },
+                navigateToImageSwipe = { navigationActions.navigateToImageSwipe() },
+                navigateToItemList = { navigationActions.navigateToItemList() },
                 closeDrawer = { coroutineScope.launch { drawerState.close() } },
                 modifier = Modifier
             )
@@ -66,20 +67,32 @@ fun MainComposable(
     ) {
         Scaffold(topBar = {
             TopAppBar(
-                title = { Text(text = currentRoute
-                    //.substringBefore("/")
-                ) },
+                title = {
+                    Text(
+                        text = currentRoute.substringBefore("/")
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
+                actions = {
+                    if (currentRoute.substringBefore("/")=="ItemList"){
+                    IconButton(onClick = {
+                        navController.navigate(AllDestinations.ITEM_ADD)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Green
+                        )
+                    }
+                } },
                 navigationIcon = {
                     IconButton(onClick = {
                         coroutineScope.launch { drawerState.open() }
-                    }, content = {
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Menu, contentDescription = null
                         )
-                    })
+                    }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary) //primaryContainer
             )
         }, bottomBar = {
             BottomAppBar(
@@ -89,49 +102,40 @@ fun MainComposable(
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     content = {
-                        IconButton(onClick = {
-                            navigationActions.navigateToImages()
-                        }, content = {
+                        IconButton(
+                            onClick = {
+                                navigationActions.navigateToImageSwipe()
+                            }, modifier = Modifier.weight(1.0F)
+                        ) {
 
                             Image(
                                 painter = painterResource(id = R.drawable.chevron_left),
                                 contentDescription = null,
                                 modifier = Modifier.weight(1.0F)
                             )
-//                            Text(
-//                                text = "Image swipe",
-//                                modifier = Modifier.weight(1.0F)
-//                            )
-
-
-                        }, modifier = Modifier.weight(1.0F)
-                        )
-                        IconButton(onClick = {
-                            navigationActions.navigateToHome()
-                        }, content = {
+                        }
+                        IconButton(
+                            onClick = {
+                                navigationActions.navigateToStartScreen()
+                            }, modifier = Modifier.weight(1.0F)
+                        ) {
 
                             Image(
                                 painter = painterResource(id = R.drawable.chevron_up),
                                 contentDescription = null
                             )
-                            //Text(text = "Start screen")
-
-
-                        }, modifier = Modifier.weight(1.0F)
-                        )
-                        IconButton(onClick = {
-                            navigationActions.navigateToItemsList()
-                        }, content = {
+                        }
+                        IconButton(
+                            onClick = {
+                                navigationActions.navigateToItemList()
+                            }, modifier = Modifier.weight(1.0F)
+                        ) {
 
                             Image(
                                 painter = painterResource(id = R.drawable.chevron_right),
                                 contentDescription = null
                             )
-                            //Text(text = "Item list")
-
-
-                        }, modifier = Modifier.weight(1.0F)
-                        )
+                        }
 
                     })
             }

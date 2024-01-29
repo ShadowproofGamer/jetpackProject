@@ -4,15 +4,22 @@ import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +37,7 @@ import com.example.jetpackproject.R
 import com.example.jetpackproject.db.DBItem
 import com.example.jetpackproject.db.humanoids
 import androidx.navigation.NavHostController
+import com.example.jetpackproject.AllDestinations
 import com.example.jetpackproject.db.DBItemViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -106,24 +114,36 @@ fun ItemList(
     viewModel: DBItemViewModel
 ) {
     val items = viewModel.dataList.collectAsState(initial = emptyList())
+    Box(modifier = Modifier.fillMaxSize()){
+        LazyColumn {
+            itemsIndexed(
+                //listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
+                items.value
+            ) { index, item ->
+                ItemRow(item = item,
+                    onClick = {itemDB: DBItem ->
+                        navController.navigate("${AllDestinations.ITEM_DETAILS}/${item.id}") {
+                            popUpTo(AllDestinations.ITEM_LIST)
+                            launchSingleTop = true
+                        }
+                    },
+                    onLongClick = {
+                            itemDB: DBItem -> viewModel.deleteData(itemDB)
+                    }
+                )
 
-    LazyColumn {
-        itemsIndexed(
-            //listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
-            items.value
-        ) { index, item ->
-            ItemRow(item = item,
-                onClick = {itemDB: DBItem ->
-//                    navController.navigate("${AllDestinations.ITEM_DETAILS}/${item.id}") {
-//                        popUpTo(AllDestinations.ITEMS_LIST)
-//                        launchSingleTop = true
-//                    }
-                },
-                onLongClick = {
-                    itemDB: DBItem -> viewModel.deleteData(itemDB)
-                }
-            )
-
+            }
         }
+//        FloatingActionButton(
+//            onClick = {
+//                navController.navigate(AllDestinations.ITEM_ADD)
+//                      },
+//            modifier = Modifier
+//                //.padding(all = 16.dp)
+//                .align(Alignment.BottomEnd)
+//        ) {
+//            Icon(imageVector = Icons.Default.Add, contentDescription = "add item")
+//        }
     }
+
 }
