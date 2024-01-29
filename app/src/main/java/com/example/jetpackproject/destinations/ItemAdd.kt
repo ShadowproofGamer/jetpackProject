@@ -1,4 +1,4 @@
-package com.example.jetpackproject.destinations
+package com .example.jetpackproject.destinations
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -39,24 +40,27 @@ import com.example.jetpackproject.db.humanoids
 fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavController) {
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
+    var itemId by rememberSaveable { mutableIntStateOf(item?.id ?: -1) }
     var itemType by rememberSaveable { mutableStateOf(item?.item_type ?: humanoids[0]) }
     var textName by rememberSaveable { mutableStateOf(item?.text_name ?: "") }
     var textSpec by rememberSaveable { mutableStateOf(item?.text_spec ?: "") }
     var dangerous by rememberSaveable { mutableStateOf(item?.dangerous ?: false) }
     var itemStrength by rememberSaveable { mutableFloatStateOf(item?.item_strength ?: 0.0f) }
-    var modify by rememberSaveable { mutableStateOf(item?.dangerous ?: false) }
+    var modify = (item !=null)
 
     LaunchedEffect(item) {
-        if (item != null && itemType!=item.item_type) {
+        if (item != null && itemId != item.id) {
+            itemId = item.id
             itemType = item.item_type
             textName = item.text_name
             textSpec = item.text_spec
             dangerous = item.dangerous
             itemStrength = item.item_strength
-            modify = true
-        } else {
-            modify = false
+            //modify = true
         }
+//        else {
+//            modify = false
+//        }
     }
 
 
