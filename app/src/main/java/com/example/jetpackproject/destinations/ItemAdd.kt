@@ -1,9 +1,11 @@
 package com .example.jetpackproject.destinations
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -65,7 +67,10 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
 
 
     Column(
-
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 20.dp, horizontal = 60.dp)
     ) {
         Text(
             text = if (modify) {
@@ -75,7 +80,8 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
             },
             textAlign = TextAlign.Center,
             fontSize = 22.sp,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Text(text = "Name")
         TextField(
@@ -152,7 +158,9 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
 
             //buttons
             Row(
-
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Bottom
             ) {
                 Button(
                     onClick = {
@@ -172,13 +180,13 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
 
                         navController.navigate(AllDestinations.ITEM_LIST)
                     },
-                    modifier = Modifier.weight(1.0F)
+                    //modifier = Modifier.weight(1.0F)
                 ) {
                     Text(text = "Save")
                 }
                 Button(
                     onClick = { onBackPressedDispatcher?.onBackPressed() },
-                    modifier = Modifier.weight(1.0F)
+                    //modifier = Modifier.weight(1.0F)
                 ) {
                     Text(text = "Cancel")
                 }
