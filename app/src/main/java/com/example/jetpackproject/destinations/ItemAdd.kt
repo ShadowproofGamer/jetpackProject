@@ -1,4 +1,4 @@
-package com .example.jetpackproject.destinations
+package com.example.jetpackproject.destinations
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Arrangement
@@ -39,9 +39,8 @@ import com.example.jetpackproject.db.humanoids
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavController) {
+fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel) {
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-
 
     var itemId by rememberSaveable { mutableIntStateOf(item?.id ?: -1) }
     var itemType by rememberSaveable { mutableStateOf(item?.item_type ?: humanoids[0]) }
@@ -66,7 +65,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 20.dp, horizontal = 60.dp)
+            .padding(horizontal = 50.dp)
     ) {
         Text(
             text = if (item !=null) {
@@ -88,7 +87,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                 .fillMaxWidth()
             //.scale(scaleY = 0.9F, scaleX = 1F)
         )
-        Spacer(modifier = Modifier.padding(5.dp))
+        //Spacer(modifier = Modifier.padding(5.dp))
         Text(text = "Specific info")
         TextField(
             value = textSpec,
@@ -98,7 +97,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                 .fillMaxWidth()
             //.scale(scaleY = 0.9F, scaleX = 1F)
         )
-        Spacer(modifier = Modifier.padding(5.dp))
+        //Spacer(modifier = Modifier.padding(5.dp))
         Text(text = "Strength")
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -122,27 +121,31 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
             )
         }
         Row (
-            //modifier = Modifier.weight(1.0F),
+            //modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically
         ){
-            Checkbox(checked = dangerous, onCheckedChange = { dangerous = it })
+            Checkbox(checked = dangerous,
+                onCheckedChange = { dangerous = it },
+                modifier = Modifier.weight(1.0F))
             Text(text = "Is dangerous?",
                 modifier = Modifier
-                .weight(1.0F)
-                .padding(start = 10.dp)
-                .align(Alignment.CenterVertically),
+                .weight(2.0F),
                 textAlign = TextAlign.Left)
             Column(
-                modifier = Modifier.weight(1.0F)
+                modifier = Modifier.weight(2.0F)
             ) {
                 humanoids.forEach { type ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        ) {
                         RadioButton(
                             selected = itemType == type,
-                            onClick = { itemType = type }
+                            onClick = { itemType = type },
+
                         )
                         Text(
-                            text = type
+                            text = type,
+
                         )
                     }
 
@@ -162,7 +165,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                     onClick = {
                         val resultItem = DBItem(
                             item?.id ?: 0,
-                            textName,
+                            if(textName!=""){textName}else{"Default name"},
                             textSpec,
                             itemStrength,
                             itemType,
@@ -174,7 +177,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel, navController: NavControl
                             viewModel.updateData(resultItem)
                         }
 
-                        navController.navigate(AllDestinations.ITEM_LIST)
+                        onBackPressedDispatcher?.onBackPressed()
                     },
                     //modifier = Modifier.weight(1.0F)
                 ) {

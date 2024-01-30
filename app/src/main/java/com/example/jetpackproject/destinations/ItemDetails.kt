@@ -75,7 +75,7 @@ fun ItemDetails(
 
         Spacer(modifier = Modifier.padding(15.dp))
         Column {
-            Text(text = "Rating")
+            Text(text = "Strength")
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {

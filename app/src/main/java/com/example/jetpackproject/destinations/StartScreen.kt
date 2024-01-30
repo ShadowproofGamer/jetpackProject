@@ -28,13 +28,11 @@ fun StartScreen(imageId: Int) {
         Text(
             text = "Main screen",
             fontSize = 22.sp,
-            style = MaterialTheme.typography.titleLarge
+            //style = MaterialTheme.typography.titleLarge
         )
         Image(
             painter = painterResource(id = imageId),
-            contentDescription = stringResource(
-                id = R.string.opis_1
-            )
+            contentDescription = null
         )
         Text(
             text = "Jakub Cebula",

@@ -43,8 +43,9 @@ fun SetupNavGraph(
         composable(route = "${AllDestinations.START_SCREEN}/{img}",
             arguments = listOf(navArgument(name = "img") {
                 type = NavType.StringType
-            })) { navBackStackEntry ->
-            val image = navBackStackEntry.arguments?.getString("img")
+            })
+        ) {
+            val image = it.arguments?.getString("img")
             if (image != null) {
                 selectedImage = image.toInt()
             }
@@ -53,38 +54,40 @@ fun SetupNavGraph(
 
         //image swipe
         composable(route = AllDestinations.IMAGE_SWIPE) {
-            ImageSwipe(navController = navController, currentImage = selectedImage)
+            ImageSwipe(currentImage = selectedImage, navController = navController)
         }
 
         //item list
         composable(route = AllDestinations.ITEM_LIST) {
-            ItemList(navController = navController, viewModel = viewModel)
+            ItemList(viewModel = viewModel, navController = navController)
         }
 
 
         composable(route = "${AllDestinations.ITEM_DETAILS}/{itemId}",
             arguments = listOf(navArgument(name = "itemId") {
                 type = NavType.StringType
-            })) { navBackStackEntry ->
-            val itemId = navBackStackEntry.arguments?.getString("itemId")?.toInt()
+            })
+        ) {
+            val itemId = it.arguments?.getString("itemId")?.toInt()
             if (itemId != null) {
                 ItemDetails(itemId = itemId, viewModel = viewModel, navController = navController)
             }
         }
 
         composable(route = AllDestinations.ITEM_ADD) {
-            ItemAdd(item = null, viewModel = viewModel, navController = navController)
+            ItemAdd(item = null, viewModel = viewModel)
         }
 
         composable(route = "${AllDestinations.ITEM_ADD}/{itemId}",
             arguments = listOf(navArgument(name = "itemId") {
                 type = NavType.StringType
-            })) { navBackStackEntry ->
+            })
+        ) { navBackStackEntry ->
             val itemId = navBackStackEntry.arguments?.getString("itemId")?.toInt()
             val item = viewModel.getData(itemId!!)
                 .collectAsStateWithLifecycle(initialValue = DBItem()).value
 
-            ItemAdd(item = item, viewModel = viewModel, navController = navController)
+            ItemAdd(item = item, viewModel = viewModel)
         }
     }
 }
