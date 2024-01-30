@@ -36,9 +36,7 @@ import com.example.jetpackproject.db.humanoids
 
 @Composable
 fun ItemDetails(
-    itemId: Int,
-    viewModel: DBItemViewModel,
-    navController: NavController
+    itemId: Int, viewModel: DBItemViewModel, navController: NavController
 ) {
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val item = viewModel.getData(itemId).collectAsState(initial = DBItem()).value
@@ -80,8 +78,7 @@ fun ItemDetails(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 LinearProgressIndicator(
-                    progress = (item.item_strength / 5.0f),
-                    modifier = Modifier.weight(4f)
+                    progress = (item.item_strength / 5.0f), modifier = Modifier.weight(4f)
                 )
                 Text(
                     text = String.format("%.1f", item.item_strength),
@@ -98,9 +95,7 @@ fun ItemDetails(
             modifier = Modifier.fillMaxWidth()
         ) {
             Checkbox(
-                checked = item.dangerous,
-                onCheckedChange = null,
-                enabled = false
+                checked = item.dangerous, onCheckedChange = null, enabled = false
             )
             Text(
                 text = "Is dangerous",

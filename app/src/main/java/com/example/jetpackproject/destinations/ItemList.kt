@@ -57,23 +57,25 @@ fun ItemRow(
     }
     val openDialog = remember { mutableStateOf(false) }
 
-    Row(verticalAlignment = Alignment.CenterVertically,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = {
-                onClick(item)
-            },
+                    onClick(item)
+                },
                 onLongClick = {
-                openDialog.value = true
-            })
-            .padding(vertical = 10.dp, horizontal = 20.dp)) {
+                    openDialog.value = true
+                })
+            .padding(vertical = 10.dp, horizontal = 20.dp)
+    ) {
         Image(
             painter = painterResource(id = icon),
             contentDescription = "element icon",
             modifier = Modifier
                 .padding(end = 10.dp)
-                .size(50.dp)
+                //.size(100.dp)
         )
         Column {
             Text(
@@ -83,7 +85,8 @@ fun ItemRow(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = item.text_spec, fontSize = 15.sp
+                text = item.text_spec,
+                fontSize = 15.sp
             )
         }
     }
@@ -118,20 +121,20 @@ fun ItemList(
     viewModel: DBItemViewModel
 ) {
     val items = viewModel.dataList.collectAsState(initial = emptyList())
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             itemsIndexed(
                 items.value
-            ) { index, item ->
+            ) { _, item ->
                 ItemRow(item = item,
-                    onClick = {itemDB: DBItem ->
+                    onClick = {
                         navController.navigate("${AllDestinations.ITEM_DETAILS}/${item.id}") {
                             popUpTo(AllDestinations.ITEM_LIST)
                             launchSingleTop = true
                         }
                     },
                     onLongClick = {
-                            itemDB: DBItem -> viewModel.deleteData(itemDB)
+                        viewModel.deleteData(item)
                     }
                 )
 

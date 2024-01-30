@@ -155,7 +155,7 @@ fun ItemAdd(item: DBItem?, viewModel: DBItemViewModel) {
 
 
 
-            //buttons
+            // save/cancel buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
